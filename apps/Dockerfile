@@ -3,7 +3,7 @@ FROM golang:1.14 as builder
 LABEL maintainer="mav-MWP-Engg-All@mavenir.com"
 WORKDIR /apps
 COPY . .
-RUN CGO_ENABLED=0 go build
+RUN GO111MODULE=off CGO_ENABLED=0 go build
 
 # helm image
 FROM alpine:3.13.0 as helm
