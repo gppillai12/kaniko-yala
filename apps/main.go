@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"yala/cmd"
+	"log"
+	"net/http"
 )
 
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Hello, 世界")
+}
+
 func main() {
-	if err := cmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	http.HandleFunc("/", handler)
+	log.Fatal(http.ListenAndServe(":8888", nil))
 }
