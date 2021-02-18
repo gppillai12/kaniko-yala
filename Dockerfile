@@ -2,7 +2,7 @@
 FROM golang:1.14 as builder
 LABEL maintainer="mav-MWP-Engg-All@mavenir.com"
 WORKDIR /apps
-COPY . .
+ADD . .
 RUN CGO_ENABLED=0 go build
 
 # helm image
