@@ -6,6 +6,7 @@ COPY . .
 CMD pwd && ls -la
 RUN pwd
 RUN go env
+RUN go mod tidy
 RUN go build -mod=vendor
 
  # helm image
