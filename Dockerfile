@@ -3,7 +3,6 @@ FROM golang:1.14 as builder
 LABEL maintainer="mav-MWP-Engg-All@mavenir.com"
 WORKDIR /yala
 ADD . .
-COPY cmd .
 RUN pwd && ls -lha
 RUN go env
 RUN go mod vendor
