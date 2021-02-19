@@ -1,22 +1,28 @@
 # builder image
 FROM golang:1.14 as builder
 LABEL maintainer="mav-MWP-Engg-All@mavenir.com"
-WORKDIR /src
-ADD . .
-COPY main.go go.* /src
-RUN CGO_ENABLED=0 go build
+WORKDIR /yala
+COPY . .
+CMD pwd && ls -la
+RUN pwd
+RUN go env
+RUN go build -mod=vendor
 
-# helm image
+ # helm image
 FROM alpine:3.13.0 as helm
-WORKDIR /src
+WORKDIR /yala
+CMD pwd && ls -la /yala
+RUN pwd && ls -la /yala
 RUN apk add curl && curl -LO https://get.helm.sh/helm-v3.4.2-linux-amd64.tar.gz
 RUN tar -zxvf helm-v3.4.2-linux-amd64.tar.gz
 
-# final image
+ # final image
 FROM alpine:3.13.0
-WORKDIR /src
-COPY --from=builder /src/yala /usr/local/bin/yala
-COPY --from=helm /src/linux-amd64/helm /usr/local/bin/helm
+WORKDIR /yala
+CMD pwd && ls -la /yala
+RUN pwd && ls -la /yala
+COPY --from=builder /yala/yala /usr/local/bin/yala
+COPY --from=helm /yala/linux-amd64/helm /usr/local/bin/helm
 RUN apk add --update docker openrc
 RUN rc-update add docker boot
 ENTRYPOINT ["yala"]
