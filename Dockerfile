@@ -3,11 +3,10 @@ FROM golang:1.14 as builder
 LABEL maintainer="mav-MWP-Engg-All@mavenir.com"
 WORKDIR /yala
 COPY . .
-CMD pwd && ls -la
-RUN pwd
+RUN pwd && ls -la
 RUN go env
-RUN go mod tidy
-RUN go build -mod=vendor
+RUN go mod vendor
+RUN go build
 
  # helm image
 FROM alpine:3.13.0 as helm
