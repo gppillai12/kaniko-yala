@@ -12,7 +12,7 @@
 
 ## Turn off huge page on postgres DB level
 
-- step1: create a configMap to make the huge pages = off in postgresql.conf file.
+- **step1:** create a configMap to make the huge pages = off in postgresql.conf file.
          copy the below content to postgres-cm.yaml to create a config map.
 <details>
 <summary>postgres-cm.yaml</summary>
@@ -677,7 +677,7 @@ metadata:
 kubectl create -f postgres-cm.yaml
 ```
 
-- step2: Mount this configmap as volume and replace the existing postgresql.conf from this mount 
+- **step2:** Mount this configmap as volume and replace the existing postgresql.conf from this mount 
   path uing init container. we can use the below content to add the init containter
   - edit the sts file ``` kubectl edit sts harbor-harbor-database ```
   - add the below contents as a second init container and save to reflect the changes.
@@ -709,7 +709,7 @@ spec:
   containers:
 ```
 
-- step3: Login to the harbor-harbor-database-0 to see the changes
+- **step3:** Login to the harbor-harbor-database-0 to see the changes
 
 ```
 kubectl -n mavenir-platform exec -it harbor-harbor-database-0 -- /bin/sh
