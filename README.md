@@ -710,4 +710,3 @@ cat /var/lib/postgresql/data/pgdata/postgresql.conf | grep huge_pages
 #huge_pages = try                       # on, off, or try
 huge_pages = off
 ```
-
