@@ -682,8 +682,7 @@ kubectl create -f postgres-cm.yaml
   - edit the file database-ss.yaml (cicd-platform/helm/charts/harbor/templates/database)
   - add the below contents as a second init container and save to reflect the changes.
 
-<details>
-<summary>init-container</summary>
+
 ```yaml
 - command:
   - /bin/sh
@@ -699,7 +698,7 @@ kubectl create -f postgres-cm.yaml
     - mountPath: /opt
       name: postgres-config
 ```
-</details>
+
 
 - step3: Login to the harbor-harbor-database-0 to see the changes
 
