@@ -12,9 +12,10 @@
 
 ## Turn off huge page on postgres DB level
 
-- step1: create a configMap to make the huge pages = off
+- step1: create a configMap to make the huge pages = off in postgresql.conf file.
+         copy the below content to postgres-cm.yaml to create a config map.
 <details>
-<summary>Postgres-cm.yaml</summary>
+<summary>postgres-cm.yaml</summary>
 
 ```
 apiVersion: v1
@@ -671,4 +672,42 @@ metadata:
 
 ```
 </details>
+
+```
+kubectl create -f postgres-cm.yaml
+```
+
+- step2: Mount this configmap as volume and replace the existing postgresql.conf from this mount 
+  path uing init container. we can use the below content to add the init containter
+  - edit the file database-ss.yaml (cicd-platform/helm/charts/harbor/templates/database)
+  - add the below contents as a second init container and save to reflect the changes.
+
+<details>
+<summary>init-container</summary>
+- command:
+  - /bin/sh
+  - -c
+  - cp /opt/..data/postgresql.conf /var/lib/postgresql/data/pgdata/postgresql.conf
+    image: busybox
+    imagePullPolicy: Always
+    name: pgconf
+    resources: {}
+    volumeMounts:
+    - mountPath: /var/lib/postgresql/data
+      name: database-data
+    - mountPath: /opt
+      name: postgres-config
+</details>
+
+- step3: Login to the harbor-harbor-database-0 to see the changes
+
+```
+kubectl -n mavenir-platform exec -it harbor-harbor-database-0 -- /bin/sh
+```
+
+```
+cat /var/lib/postgresql/data/pgdata/postgresql.conf | grep huge_pages
+#huge_pages = try                       # on, off, or try
+huge_pages = off
+```
 
