@@ -685,19 +685,16 @@ kubectl create -f postgres-cm.yaml
 
 
 ```yaml
-- command:
-  - /bin/sh
-  - -c
-  - cp /opt/..data/postgresql.conf /var/lib/postgresql/data/pgdata/postgresql.conf
-    image: busybox
-    imagePullPolicy: Always
-    name: pgconf
-    resources: {}
-    volumeMounts:
-    - mountPath: /var/lib/postgresql/data
-      name: database-data
-    - mountPath: /opt
-      name: postgres-config
+- name: pgconf
+  command: ["/bin/sh", "-c", "cp /opt/..data/postgresql.conf /var/lib/postgresql/data/pgdata/postgresql.conf"]
+  image: busybox
+  imagePullPolicy: Always
+  resources: {}
+  volumeMounts:
+  - mountPath: /var/lib/postgresql/data
+    name: database-data
+  - mountPath: /opt
+    name: postgres-config
 ```
 
 ```yaml
