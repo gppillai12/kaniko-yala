@@ -684,6 +684,7 @@ kubectl create -f postgres-cm.yaml
 
 <details>
 <summary>init-container</summary>
+```yaml
 - command:
   - /bin/sh
   - -c
@@ -697,6 +698,7 @@ kubectl create -f postgres-cm.yaml
       name: database-data
     - mountPath: /opt
       name: postgres-config
+```
 </details>
 
 - step3: Login to the harbor-harbor-database-0 to see the changes
