@@ -679,8 +679,9 @@ kubectl create -f postgres-cm.yaml
 
 - step2: Mount this configmap as volume and replace the existing postgresql.conf from this mount 
   path uing init container. we can use the below content to add the init containter
-  - edit the file database-ss.yaml (cicd-platform/helm/charts/harbor/templates/database)
+  - edit the sts file ``` kubectl edit sts harbor-harbor-database ```
   - add the below contents as a second init container and save to reflect the changes.
+  - add the configMap volume above container section.
 
 
 ```yaml
@@ -699,6 +700,14 @@ kubectl create -f postgres-cm.yaml
       name: postgres-config
 ```
 
+```yaml
+spec:
+  volumes:
+  - name: postgres-config
+    configMap:
+      name: postgres-config
+  containers:
+```
 
 - step3: Login to the harbor-harbor-database-0 to see the changes
 
