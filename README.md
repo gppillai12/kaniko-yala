@@ -11,6 +11,8 @@
 <!-- prettier-ignore-end -->
 
 ## Turn off huge page on postgres DB level
+Error Link for reference - https://www.postgresql.org/message-id/HE1PR0701MB256920EEAA3B2A9C06249F339E110%40HE1PR0701MB2569.eurprd07.prod.outlook.com 
+
 
 - **step1:** create a configMap to make the huge pages = off in postgresql.conf file.
          copy the below content to postgres-cm.yaml to create a config map.
